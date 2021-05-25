@@ -408,6 +408,11 @@ public class KayitEkrani extends javax.swing.JFrame {
             jLabel2.setVisible(true);
             return;
         }
+        if(Veritabani.checkUser(jTextField3.getText())){
+            jLabel2.setText("Bu kullanıcı adı mevcut");
+            jLabel2.setVisible(true);
+            return;
+        }
         char[] sifre = {'P','a','s','s','w','o','r','d'};
         if(!jTextField1.getText().equals("") && !jTextField1.getText().equals("İsim")
                 && !jTextField2.getText().equals("") && !jTextField2.getText().equals("Soyisim")

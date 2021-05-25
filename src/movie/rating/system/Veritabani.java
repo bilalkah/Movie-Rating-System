@@ -43,6 +43,22 @@ public class Veritabani {
         }
     }
     
+    static boolean checkUser(String username){
+        String SQL = "select * from kullanici where username='"+username+"'";
+        Statement statement;
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL);
+            if(resultSet.next()){
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Veritabani.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return false;
+    }
+    
     static void insertUser(String username,String password,String name,String surname,String gender){
         String SQL = "insert into kullanici(username,password,name,surname,gender) "
                 + "values(?,?,?,?,?)";
