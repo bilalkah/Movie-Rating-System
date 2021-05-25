@@ -60,8 +60,8 @@ public class Veritabani {
         }
     }
     
-    static boolean isUserNameExists(String username){
-        String SQL = "select exists(select 1 from kullanici where username='"+username+"')";
+    static boolean isUserExists(String username,String password){
+        String SQL = "select * from kullanici where username='"+username+"' and password='"+password+"'";
         Statement statement;
         try {
             statement = connection.createStatement();
@@ -76,19 +76,4 @@ public class Veritabani {
         return false;
     }
     
-    static boolean isPasswordMatch(String username, String password){
-        String SQL = "select exists(select 1 from kullanici where username='"+username+"' and password='"+password+"')";
-        Statement statement;
-        try {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL);
-            if(resultSet.next()){
-                return true;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Veritabani.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-        return false;
-    }
 }

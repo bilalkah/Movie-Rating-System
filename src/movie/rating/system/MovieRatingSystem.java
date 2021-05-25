@@ -25,6 +25,7 @@ public class MovieRatingSystem {
         MovieRatingSystem movieRatingSystem = new MovieRatingSystem();
         
         GirisEkrani girisEkrani = new GirisEkrani();
+        girisEkrani.setLocation(550,250);
         girisEkrani.setVisible(true);
         
     }

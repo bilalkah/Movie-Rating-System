@@ -8,8 +8,15 @@ create table if not exists Kullanici (
 );
 
 create table if not exists online (
+	count int
+);
+
+create table if not exists movie (
 	movie_id serial Primary key,
 	name varchar (30) not null,
 	year int not null,
-	
-)
+	director varchar(30) not null,
+	rating float4,
+	genre text[][] not null,
+	summary varchar(100)
+);

@@ -327,6 +327,7 @@ public class KayitEkrani extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         GirisEkrani girisEkrani = new GirisEkrani();
+        girisEkrani.setLocation(550,250);
         this.dispose();
         girisEkrani.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -416,6 +417,7 @@ public class KayitEkrani extends javax.swing.JFrame {
         {
             register();
             AnaSayfa anaSayfa = new AnaSayfa();
+            anaSayfa.setLocation(550,250);
             this.dispose();
             anaSayfa.setVisible(true);
         }
