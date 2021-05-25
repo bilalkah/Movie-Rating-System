@@ -88,11 +88,6 @@ public class KayitEkrani extends javax.swing.JFrame {
                 jTextField1MouseClicked(evt);
             }
         });
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
 
         jTextField2.setBackground(new java.awt.Color(186, 79, 84));
         jTextField2.setForeground(new java.awt.Color(255, 255, 255));
@@ -332,34 +327,39 @@ public class KayitEkrani extends javax.swing.JFrame {
         girisEkrani.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
         // TODO add your handling code here:
-        jTextField1.setText("");
+        if(jTextField1.getText().equals("İsim")){
+            jTextField1.setText("");
+        }
     }//GEN-LAST:event_jTextField1MouseClicked
 
     private void jTextField2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField2MouseClicked
         // TODO add your handling code here:
-        jTextField2.setText("");
+        if(jTextField2.getText().equals("Soyisim")){
+            jTextField2.setText("");
+        }
     }//GEN-LAST:event_jTextField2MouseClicked
 
     private void jTextField3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField3MouseClicked
         // TODO add your handling code here:
-        jTextField3.setText("");
+        if(jTextField3.getText().equals("Kullanıcı Adı")){
+            jTextField3.setText("");
+        }
     }//GEN-LAST:event_jTextField3MouseClicked
 
     private void jPasswordField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPasswordField1MouseClicked
         // TODO add your handling code here:
-        jPasswordField1.setText("");
+        if(String.valueOf(jPasswordField1.getPassword()).equals("Password")){
+            jPasswordField1.setText("");
+        }
     }//GEN-LAST:event_jPasswordField1MouseClicked
 
     private void jPasswordField2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPasswordField2MouseClicked
         // TODO add your handling code here:
-        jPasswordField2.setText("");
+        if(String.valueOf(jPasswordField2.getPassword()).equals("Password")){
+            jPasswordField2.setText("");
+        }
     }//GEN-LAST:event_jPasswordField2MouseClicked
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed

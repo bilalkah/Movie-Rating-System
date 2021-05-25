@@ -110,11 +110,6 @@ public class GirisEkrani extends javax.swing.JFrame {
                 jPasswordField1MouseClicked(evt);
             }
         });
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
-            }
-        });
 
         jButton1.setBackground(new java.awt.Color(186, 79, 84));
         jButton1.setText("Giriş");
@@ -220,10 +215,6 @@ public class GirisEkrani extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         KayitEkrani kayitEkrani = new KayitEkrani();
@@ -234,7 +225,9 @@ public class GirisEkrani extends javax.swing.JFrame {
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
         // TODO add your handling code here:
-        jTextField1.setText("");
+        if(jTextField1.getText().equals("Kullanıcı Adı")){
+            jTextField1.setText("");
+        }
     }//GEN-LAST:event_jTextField1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -259,7 +252,9 @@ public class GirisEkrani extends javax.swing.JFrame {
 
     private void jPasswordField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPasswordField1MouseClicked
         // TODO add your handling code here:
-        jPasswordField1.setText("");
+        if(String.valueOf(jPasswordField1.getPassword()).equals("Password")){
+            jPasswordField1.setText("");
+        }
     }//GEN-LAST:event_jPasswordField1MouseClicked
 
     private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
