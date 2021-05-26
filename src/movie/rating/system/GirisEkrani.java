@@ -238,10 +238,6 @@ public class GirisEkrani extends javax.swing.JFrame {
         System.out.println(password);
         if(Veritabani.isUserExists(username,password)){
             System.out.println("Giriş Başarılı");
-            AnaSayfa anaSayfa = new AnaSayfa();
-            anaSayfa.setLocation(550,250);
-            this.dispose();
-            anaSayfa.setVisible(true);
         }else{
             System.out.println("Kullanıcı Adı/Şifre Yanlış");
             jLabel3.setText("Kullanıcı Adı/Şifre Yanlış");

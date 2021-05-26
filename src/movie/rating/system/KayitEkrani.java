@@ -421,10 +421,6 @@ public class KayitEkrani extends javax.swing.JFrame {
                 && (jRadioButton2.isSelected() || jRadioButton3.isSelected()))
         {
             register();
-            AnaSayfa anaSayfa = new AnaSayfa();
-            anaSayfa.setLocation(550,250);
-            this.dispose();
-            anaSayfa.setVisible(true);
         }
         else
         {

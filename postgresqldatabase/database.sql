@@ -16,7 +16,13 @@ create table if not exists movie (
 	name varchar (30) not null,
 	year int not null,
 	director varchar(30) not null,
-	rating float4,
+	likes float4,
 	genre text[][] not null,
 	summary varchar(100)
+);
+
+create table if not exists liked (
+	username varchar (20) not null,
+	movie_id varchar (30) not null,
+	
 );
