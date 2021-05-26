@@ -29,11 +29,6 @@ create table if not exists liked (
 	movie_id varchar (30) not null	
 );
 
-create table if not exists disliked(
-	username varchar (20) not null,
-	movie_id varchar (30) not null
-);
-
 create table if not exists online (
 	count int
 );
