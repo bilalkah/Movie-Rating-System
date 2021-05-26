@@ -5,8 +5,6 @@
  */
 package movie.rating.system;
 
-import java.util.Arrays;
-
 /**
  *
  * @author bilal
@@ -238,6 +236,10 @@ public class GirisEkrani extends javax.swing.JFrame {
         System.out.println(password);
         if(Veritabani.isUserExists(username,password)){
             System.out.println("Giriş Başarılı");
+            AnaEkran anaEkran = new AnaEkran();
+            anaEkran.setLocation(550,250);
+            this.dispose();
+            anaEkran.setVisible(true);
         }else{
             System.out.println("Kullanıcı Adı/Şifre Yanlış");
             jLabel3.setText("Kullanıcı Adı/Şifre Yanlış");

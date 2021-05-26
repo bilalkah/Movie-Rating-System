@@ -421,6 +421,10 @@ public class KayitEkrani extends javax.swing.JFrame {
                 && (jRadioButton2.isSelected() || jRadioButton3.isSelected()))
         {
             register();
+            AnaEkran anaEkran = new AnaEkran();
+            anaEkran.setLocation(550,250);
+            this.dispose();
+            anaEkran.setVisible(true);
         }
         else
         {
