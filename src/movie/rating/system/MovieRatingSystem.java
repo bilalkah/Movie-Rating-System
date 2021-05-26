@@ -14,10 +14,10 @@ public class MovieRatingSystem {
     /**
      */
     
-    
+    static Kullanici kullanici;
     public MovieRatingSystem(){
         Veritabani.connect();
-
+        
     }
     
     public static void main(String[] args) {

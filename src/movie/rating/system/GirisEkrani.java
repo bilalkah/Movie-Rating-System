@@ -5,6 +5,11 @@
  */
 package movie.rating.system;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author bilal
@@ -232,9 +237,18 @@ public class GirisEkrani extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = jTextField1.getText();
         String password = String.valueOf(jPasswordField1.getPassword());
-        System.out.println(username);
-        System.out.println(password);
+
         if(Veritabani.isUserExists(username,password)){
+            String SQL = "select * from kullanici where username='"+username+"' and password='"+password+"'";
+            ResultSet rs = Veritabani.list(SQL);
+            
+            try {
+                if(rs.next()){
+                    MovieRatingSystem.kullanici = new Kullanici(rs.getString("username"),rs.getString("password"),rs.getString("name"),rs.getString("surname"),rs.getString("gender"));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GirisEkrani.class.getName()).log(Level.SEVERE, null, ex);
+            }
             System.out.println("Giriş Başarılı");
             AnaEkran anaEkran = new AnaEkran();
             anaEkran.setLocation(550,250);

@@ -26,7 +26,7 @@ public class Veritabani {
     static void connect(){
         try {
             connection = DriverManager.getConnection(url,"postgres","0000");
-            System.out.println("Bağlantı gerçekleşti");
+            System.out.println("Veritabanı bağlantısı gerçekleşti");
         } catch (SQLException ex) {
             Logger.getLogger(Veritabani.class.getName()).log(Level.SEVERE, null, ex);
         }

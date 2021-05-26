@@ -5,7 +5,11 @@
  */
 package movie.rating.system;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -418,9 +422,20 @@ public class KayitEkrani extends javax.swing.JFrame {
                 && !jTextField2.getText().equals("") && !jTextField2.getText().equals("Soyisim")
                 && !jTextField3.getText().equals("") && !jTextField3.getText().equals("Kullanıcı Adı")
                 && jPasswordField1.getPassword()!=null && !(Arrays.equals(jPasswordField1.getPassword(), sifre))
-                && (jRadioButton2.isSelected() || jRadioButton3.isSelected()))
+                && (jRadioButton1.isSelected() || jRadioButton2.isSelected()))
         {
-            register();
+            register(); 
+            String SQL = "select * from kullanici where username='"+jTextField3.getText()+"' and password='"+String.valueOf(jPasswordField1.getPassword())+"'";
+            ResultSet rs = Veritabani.list(SQL);
+            
+            try {
+                if(rs.next()){
+                    MovieRatingSystem.kullanici = new Kullanici(rs.getString("username"),rs.getString("password"),rs.getString("name"),rs.getString("surname"),rs.getString("gender"));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(GirisEkrani.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Kayıt başarılı");
             AnaEkran anaEkran = new AnaEkran();
             anaEkran.setLocation(550,250);
             this.dispose();
