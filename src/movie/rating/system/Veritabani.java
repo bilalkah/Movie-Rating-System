@@ -92,4 +92,32 @@ public class Veritabani {
         return false;
     }
     
+    static int getCount(String table,String username){
+        int count=0;
+        String SQL = "select count(*) from "+table+" where username='"+username+"'";
+        Statement statement;
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL);
+            if(resultSet.next()){
+                count = resultSet.getInt("count");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Veritabani.class.getName()).log(Level.SEVERE, null, ex);
+            count = 0;
+        }
+        return count;
+    }
+    
+    static void updateUserInfo(String Column, String username, String newName){
+        String SQL = "update kullanici set "+Column+"=? where username='"+username+"'";
+        try {
+            PreparedStatement preparedStatement = Veritabani.connection.prepareStatement(SQL);
+            preparedStatement.setString(1, newName);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(Veritabani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }
