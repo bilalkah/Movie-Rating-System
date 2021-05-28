@@ -164,6 +164,11 @@ public class ProfilEkrani extends javax.swing.JFrame {
                 jTextField6FocusLost(evt);
             }
         });
+        jTextField6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField6MouseClicked(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(51, 102, 255));
@@ -223,6 +228,16 @@ public class ProfilEkrani extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(51, 102, 255));
         jTextField1.setText("...");
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField1MouseClicked(evt);
+            }
+        });
 
         jLabel14.setForeground(new java.awt.Color(51, 102, 255));
         jLabel14.setText("jLabel14");
@@ -325,6 +340,11 @@ public class ProfilEkrani extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if(jTextField3.getText().length()==0){
+            jLabel14.setText("İsim boş olamaz");
+            jLabel14.setVisible(true);
+            return;
+        }
         String name = jTextField3.getText().substring(0, 1).toUpperCase()+
                 jTextField3.getText().substring(1).toLowerCase();
         Veritabani.updateUserInfo("name",MovieRatingSystem.kullanici.getUsername(),name);
@@ -333,6 +353,11 @@ public class ProfilEkrani extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        if(jTextField5.getText().length()==0){
+            jLabel14.setText("Soyisim boş olamaz");
+            jLabel14.setVisible(true);
+            return;
+        }
         String surname = jTextField5.getText().substring(0, 1).toUpperCase()+
                 jTextField5.getText().substring(1).toLowerCase();
         Veritabani.updateUserInfo("surname",MovieRatingSystem.kullanici.getUsername(),surname);
@@ -343,8 +368,13 @@ public class ProfilEkrani extends javax.swing.JFrame {
         // TODO add your handling code here:
         String pass1 = jTextField1.getText();
         String pass2 = jTextField6.getText();
-        if(!pass1.equals(pass2) || pass1.equals("Yeni Şifre")){
+        if(!pass1.equals(pass2)){
             jLabel14.setText("Şifreler eşleşmelidir.");
+            jLabel14.setVisible(true);
+            return;
+        }else if(pass1.equals("Yeni Şifre")){
+            jLabel14.setText("Lütfen şifre giriniz");
+            jLabel14.setVisible(true);
             return;
         }
         Veritabani.updateUserInfo("password", MovieRatingSystem.kullanici.getUsername(), pass2);
@@ -385,6 +415,27 @@ public class ProfilEkrani extends javax.swing.JFrame {
             jTextField6.setText("Yeni Şifre");
         }
     }//GEN-LAST:event_jTextField6FocusLost
+
+    private void jTextField6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField6MouseClicked
+        // TODO add your handling code here:
+        if(jTextField6.getText().equals("Yeni Şifre")){
+            jTextField6.setText("");
+        }
+    }//GEN-LAST:event_jTextField6MouseClicked
+
+    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
+        // TODO add your handling code here:
+        if(jTextField1.getText().equals("Yeni Şifre")){
+            jTextField1.setText("");
+        }
+    }//GEN-LAST:event_jTextField1MouseClicked
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        // TODO add your handling code here:
+        if(jTextField1.getText().equals("")){
+            jTextField1.setText("Yeni Şifre");
+        }
+    }//GEN-LAST:event_jTextField1FocusLost
 
     /**
      * @param args the command line arguments

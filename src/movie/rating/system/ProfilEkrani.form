@@ -293,6 +293,7 @@
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField6FocusLost"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTextField6MouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
@@ -424,6 +425,10 @@
             </Property>
             <Property name="text" type="java.lang.String" value="..."/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField1FocusLost"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTextField1MouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel14">
           <Properties>
