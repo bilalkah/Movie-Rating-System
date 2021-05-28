@@ -93,6 +93,9 @@ public class AnaEkran extends javax.swing.JFrame {
 
         jPanel4.setPreferredSize(new java.awt.Dimension(160, 160));
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel4MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel4MouseEntered(evt);
             }
@@ -132,6 +135,9 @@ public class AnaEkran extends javax.swing.JFrame {
         );
 
         jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel5MouseEntered(evt);
             }
@@ -172,6 +178,9 @@ public class AnaEkran extends javax.swing.JFrame {
 
         jPanel6.setPreferredSize(new java.awt.Dimension(160, 160));
         jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel6MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel6MouseEntered(evt);
             }
@@ -184,7 +193,7 @@ public class AnaEkran extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(51, 102, 255));
-        jLabel10.setText("Filmler");
+        jLabel10.setText("Ara");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -196,7 +205,7 @@ public class AnaEkran extends javax.swing.JFrame {
                         .addGap(31, 31, 31)
                         .addComponent(jLabel4))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
+                        .addGap(67, 67, 67)
                         .addComponent(jLabel10)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -211,6 +220,9 @@ public class AnaEkran extends javax.swing.JFrame {
         );
 
         jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel7MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel7MouseEntered(evt);
             }
@@ -250,6 +262,9 @@ public class AnaEkran extends javax.swing.JFrame {
         );
 
         jPanel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel8MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel8MouseEntered(evt);
             }
@@ -288,6 +303,9 @@ public class AnaEkran extends javax.swing.JFrame {
         );
 
         jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel9MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel9MouseEntered(evt);
             }
@@ -437,6 +455,54 @@ public class AnaEkran extends javax.swing.JFrame {
         jPanel9.setBackground(new Color(240,240,240));
     }//GEN-LAST:event_jPanel9MouseExited
 
+    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+        // TODO add your handling code here:
+        ProfilEkrani profilEkrani = new ProfilEkrani();
+        profilEkrani.setLocation(550, 250);
+        this.dispose();
+        profilEkrani.setVisible(true);
+    }//GEN-LAST:event_jPanel4MouseClicked
+
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+        // TODO add your handling code here:
+        FilmlerEkrani filmlerEkrani = new FilmlerEkrani();
+        filmlerEkrani.setLocation(550, 250);
+        this.dispose();
+        filmlerEkrani.setVisible(true);
+    }//GEN-LAST:event_jPanel5MouseClicked
+
+    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+        // TODO add your handling code here:
+        AramaEkrani aramaEkrani = new AramaEkrani();
+        aramaEkrani.setLocation(550, 250);
+        this.dispose();
+        aramaEkrani.setVisible(true);
+    }//GEN-LAST:event_jPanel6MouseClicked
+
+    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
+        // TODO add your handling code here:
+        IzlemeListeEkrani izlemeListeEkrani = new IzlemeListeEkrani();
+        izlemeListeEkrani.setLocation(550, 250);
+        this.dispose();
+        izlemeListeEkrani.setVisible(true);
+    }//GEN-LAST:event_jPanel7MouseClicked
+
+    private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
+        // TODO add your handling code here:
+         BegendiklerimEkrani begendiklerimEkrani = new BegendiklerimEkrani();
+         begendiklerimEkrani.setLocation(550, 250);
+         this.dispose();
+         begendiklerimEkrani.setVisible(true);
+    }//GEN-LAST:event_jPanel8MouseClicked
+
+    private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
+        // TODO add your handling code here:
+        GununTavsiyesiEkrani gununTavsiyesiEkrani = new GununTavsiyesiEkrani();
+        gununTavsiyesiEkrani.setLocation(550, 250);
+        this.dispose();
+        gununTavsiyesiEkrani.setVisible(true);
+    }//GEN-LAST:event_jPanel9MouseClicked
+    
     /**
      * @param args the command line arguments
      */
