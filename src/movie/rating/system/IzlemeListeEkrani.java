@@ -5,17 +5,67 @@
  */
 package movie.rating.system;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author bilal
  */
 public class IzlemeListeEkrani extends javax.swing.JFrame {
+    DefaultTableModel myModel;
 
     /**
      * Creates new form IzlemeListeEkrani
      */
     public IzlemeListeEkrani() {
         initComponents();
+        jLabel6.setVisible(false);
+        init();
+        filmCount();
+    }
+    public void filmCount(){
+        String SQL = "select count(*) from watchlist where username='"+ MovieRatingSystem.kullanici.getUsername()+"'";
+        jLabel3.setText("Toplam Film Sayısı: "+String.valueOf(Veritabani.getFilmCount(SQL)));
+    }
+    public void arama(){
+        jTextField1.setText("");
+        jTextField1.requestFocus();
+    }
+    public void init(){
+        myModel = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int i, int i1) {
+                return false;
+            } 
+        };
+        String SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name";
+        
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -43,6 +93,7 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(700, 500));
@@ -138,12 +189,37 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
         jLabel4.setText("Toplam Film Sayısı: 000");
 
         jTextField1.setForeground(new java.awt.Color(51, 102, 255));
-        jTextField1.setText("Filmlerde Ara");
+        jTextField1.setText("İzleme Listemde Ara");
         jTextField1.setBorder(null);
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField1MouseClicked(evt);
+            }
+        });
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jTextField2.setForeground(new java.awt.Color(51, 102, 255));
         jTextField2.setText("Tür:");
         jTextField2.setBorder(null);
+        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField2FocusLost(evt);
+            }
+        });
+        jTextField2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField2MouseClicked(evt);
+            }
+        });
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -153,6 +229,11 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(51, 102, 255));
         jButton1.setText("Alfabetik Sırala");
         jButton1.setPreferredSize(new java.awt.Dimension(160, 40));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setForeground(new java.awt.Color(51, 102, 255));
         jButton2.setText("Türe Göre Sırala");
@@ -170,32 +251,39 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("jLabel6");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addGap(30, 30, 30))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(30, 30, 30))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +291,9 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
@@ -249,6 +339,38 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        String SQL;
+        String genre = jTextField1.getText();
+        if(genre.equals("") || genre.equals("Tür:")){
+            jLabel6.setText("Lütfen uygun film türü girin.");
+            jLabel6.setVisible(true);
+        }else{
+            jLabel6.setVisible(false);
+        }
+        SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name and '"+genre+"' = any(\"genre\"));";
+            
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(IzlemeListeEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -258,6 +380,68 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel5MousePressed
+
+    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
+        jTextField1.setText("");
+    }//GEN-LAST:event_jTextField1MouseClicked
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        // TODO add your handling code here:
+        if(jTextField1.getText().equals(""))
+        jTextField1.setText("İzleme Listemde Ara:");
+    }//GEN-LAST:event_jTextField1FocusLost
+
+    private void jTextField2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField2MouseClicked
+        // TODO add your handling code here:
+        jTextField1.setText("");
+    }//GEN-LAST:event_jTextField2MouseClicked
+
+    private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
+        // TODO add your handling code here:
+        if(jTextField2.getText().equals(""))
+        jTextField2.setText("Tür:");
+    }//GEN-LAST:event_jTextField2FocusLost
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String SQL;
+        if(jButton1.getText().equals("Alfabetik Sırala")){
+            SQL = "select * from watchlist order by moviename asc";
+        }else{
+            SQL = "select * from watchlist order by moviename desc";
+        }
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+            if(jButton1.getText().equals("Alfabetik Sırala")){
+                jButton1.setText("Ters Alfabetik Sırala");
+            }else{
+                jButton1.setText("Alfabetik Sırala");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(IzlemeListeEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -303,6 +487,7 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
