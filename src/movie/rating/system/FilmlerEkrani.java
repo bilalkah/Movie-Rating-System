@@ -5,6 +5,12 @@
  */
 package movie.rating.system;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author bilal
@@ -14,12 +20,53 @@ public class FilmlerEkrani extends javax.swing.JFrame {
     /**
      * Creates new form FilmlerEkrani
      */
+    DefaultTableModel myModel;
     public FilmlerEkrani() {
         initComponents();
+        jLabel7.setVisible(false);
+        init();
+        filmCount();
+        
+    }
+    public void filmCount(){
+        String SQL = "select count(*) from movie";
+        jLabel3.setText("Toplam Film Sayısı: "+String.valueOf(Veritabani.getFilmCount(SQL)));
     }
     public void arama(){
         jTextField2.setText("");
         jTextField2.requestFocus();
+    }
+    public void init(){
+        myModel = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int i, int i1) {
+                return false;
+            } 
+        };
+        String SQL = "select* from movie";
+        
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,6 +93,7 @@ public class FilmlerEkrani extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,7 +137,7 @@ public class FilmlerEkrani extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -129,6 +177,11 @@ public class FilmlerEkrani extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel3.setForeground(new java.awt.Color(51, 102, 255));
@@ -154,10 +207,20 @@ public class FilmlerEkrani extends javax.swing.JFrame {
         });
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_search_24px_2.png"))); // NOI18N
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
 
         jButton1.setForeground(new java.awt.Color(51, 102, 255));
         jButton1.setText("Alfabetik Sırala");
         jButton1.setPreferredSize(new java.awt.Dimension(160, 40));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setForeground(new java.awt.Color(51, 102, 255));
         jButton2.setText("Türe Göre Sırala");
@@ -187,18 +250,22 @@ public class FilmlerEkrani extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("jLabel7");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(jLabel4)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField1)
@@ -206,7 +273,7 @@ public class FilmlerEkrani extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator2)
                     .addComponent(jTextField2))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,27 +281,31 @@ public class FilmlerEkrani extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addComponent(jLabel3)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)
                         .addGap(70, 70, 70)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(6, 6, 6)))
+                        .addGap(76, 76, 76)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                         .addGap(51, 51, 51))))
         );
 
@@ -254,10 +325,43 @@ public class FilmlerEkrani extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        String SQL;
+        String genre = jTextField1.getText();
+        if(genre.equals("") || genre.equals("Tür:")){
+            jLabel7.setText("Lütfen uygun film türü girin.");
+            jLabel7.setVisible(true);
+        }else{
+            jLabel7.setVisible(false);
+        }
+        SQL = "select* from movie where '"+genre+"' = any (\"genre\")";
+        
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -291,6 +395,87 @@ public class FilmlerEkrani extends javax.swing.JFrame {
         this.dispose();
         new AnaEkran().show();
     }//GEN-LAST:event_jLabel6MousePressed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        String movie = jTextField2.getText();
+        if(movie.equals("") || movie.equals("Filmlerde Ara")){
+            jLabel7.setText("Lütfen uygun film ismi giriniz.");
+            return;
+        }
+        String SQL = "select * from movie where name='"+movie+"'";
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String SQL;
+        if(jButton1.getText().equals("Alfabetik Sırala")){
+            SQL = "select * from movie order by name asc";
+        }else{
+            SQL = "select * from movie order by name desc";
+        }
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+            if(jButton1.getText().equals("Alfabetik Sırala")){
+                jButton1.setText("Ters Alfabetik Sırala");
+            }else{
+                jButton1.setText("Alfabetik Sırala");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int row = jTable1.rowAtPoint(evt.getPoint());
+        int col = jTable1.columnAtPoint(evt.getPoint());
+        
+        
+        
+        System.out.println(row+" "+col);
+        
+        
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -336,6 +521,7 @@ public class FilmlerEkrani extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
