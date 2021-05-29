@@ -17,7 +17,10 @@ public class FilmlerEkrani extends javax.swing.JFrame {
     public FilmlerEkrani() {
         initComponents();
     }
-
+    public void arama(){
+        jTextField2.setText("");
+        jTextField2.requestFocus();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
