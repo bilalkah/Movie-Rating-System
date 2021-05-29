@@ -75,10 +75,11 @@ public class KayitEkrani extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(186, 79, 84));
+        jPanel1.setBackground(new java.awt.Color(51, 102, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(700, 500));
 
-        jTextField1.setBackground(new java.awt.Color(186, 79, 84));
+        jTextField1.setBackground(new java.awt.Color(51, 102, 255));
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setText("İsim");
         jTextField1.setBorder(null);
@@ -93,7 +94,7 @@ public class KayitEkrani extends javax.swing.JFrame {
             }
         });
 
-        jTextField2.setBackground(new java.awt.Color(186, 79, 84));
+        jTextField2.setBackground(new java.awt.Color(51, 102, 255));
         jTextField2.setForeground(new java.awt.Color(255, 255, 255));
         jTextField2.setText("Soyisim");
         jTextField2.setBorder(null);
@@ -108,7 +109,7 @@ public class KayitEkrani extends javax.swing.JFrame {
             }
         });
 
-        jTextField3.setBackground(new java.awt.Color(186, 79, 84));
+        jTextField3.setBackground(new java.awt.Color(51, 102, 255));
         jTextField3.setForeground(new java.awt.Color(255, 255, 255));
         jTextField3.setText("Kullanıcı Adı");
         jTextField3.setBorder(null);
@@ -127,7 +128,7 @@ public class KayitEkrani extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Cinsiyet");
 
-        jRadioButton1.setBackground(new java.awt.Color(186, 79, 84));
+        jRadioButton1.setBackground(new java.awt.Color(51, 102, 255));
         jRadioButton1.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton1.setText("Kadın");
         jRadioButton1.setBorder(null);
@@ -137,7 +138,7 @@ public class KayitEkrani extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton2.setBackground(new java.awt.Color(186, 79, 84));
+        jRadioButton2.setBackground(new java.awt.Color(51, 102, 255));
         jRadioButton2.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton2.setText("Erkek");
         jRadioButton2.setBorder(null);
@@ -147,7 +148,7 @@ public class KayitEkrani extends javax.swing.JFrame {
             }
         });
 
-        jPasswordField1.setBackground(new java.awt.Color(186, 79, 84));
+        jPasswordField1.setBackground(new java.awt.Color(51, 102, 255));
         jPasswordField1.setForeground(new java.awt.Color(255, 255, 255));
         jPasswordField1.setText("Password");
         jPasswordField1.setBorder(null);
@@ -162,7 +163,7 @@ public class KayitEkrani extends javax.swing.JFrame {
             }
         });
 
-        jPasswordField2.setBackground(new java.awt.Color(186, 79, 84));
+        jPasswordField2.setBackground(new java.awt.Color(51, 102, 255));
         jPasswordField2.setForeground(new java.awt.Color(255, 255, 255));
         jPasswordField2.setText("Password");
         jPasswordField2.setBorder(null);
@@ -177,7 +178,7 @@ public class KayitEkrani extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton3.setBackground(new java.awt.Color(186, 79, 84));
+        jRadioButton3.setBackground(new java.awt.Color(51, 102, 255));
         jRadioButton3.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton3.setText("Şifreyi Göster");
         jRadioButton3.setBorder(null);
@@ -187,7 +188,8 @@ public class KayitEkrani extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(186, 79, 84));
+        jButton1.setBackground(new java.awt.Color(0, 0, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Kayıt Ol");
         jButton1.setBorder(null);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -196,7 +198,8 @@ public class KayitEkrani extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(186, 79, 84));
+        jButton2.setBackground(new java.awt.Color(0, 0, 255));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Giriş Ekranı");
         jButton2.setBorder(null);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -306,7 +309,7 @@ public class KayitEkrani extends javax.swing.JFrame {
                         .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -317,7 +320,7 @@ public class KayitEkrani extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
         );
 
         pack();
