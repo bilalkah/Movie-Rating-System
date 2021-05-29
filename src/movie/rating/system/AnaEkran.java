@@ -473,10 +473,11 @@ public class AnaEkran extends javax.swing.JFrame {
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
         // TODO add your handling code here:
-        AramaEkrani aramaEkrani = new AramaEkrani();
-        aramaEkrani.setLocation(550, 250);
+        FilmlerEkrani filmlerEkrani = new FilmlerEkrani();
+        filmlerEkrani.arama();
+        filmlerEkrani.setLocation(550, 250);
         this.dispose();
-        aramaEkrani.setVisible(true);
+        filmlerEkrani.setVisible(true);
     }//GEN-LAST:event_jPanel6MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
