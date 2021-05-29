@@ -29,7 +29,7 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
     }
     public void filmCount(){
         String SQL = "select count(*) from watchlist where username='"+ MovieRatingSystem.kullanici.getUsername()+"'";
-        jLabel3.setText("Toplam Film Sayısı: "+String.valueOf(Veritabani.getFilmCount(SQL)));
+        jLabel4.setText("Toplam Film Sayısı: "+String.valueOf(Veritabani.getFilmCount(SQL)));
     }
     public void arama(){
         jTextField1.setText("");
@@ -96,7 +96,6 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(700, 500));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 500));
@@ -246,6 +245,9 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_search_24px_2.png"))); // NOI18N
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel5MousePressed(evt);
             }
@@ -340,14 +342,14 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String SQL;
-        String genre = jTextField1.getText();
+        String genre = jTextField2.getText();
         if(genre.equals("") || genre.equals("Tür:")){
             jLabel6.setText("Lütfen uygun film türü girin.");
             jLabel6.setVisible(true);
         }else{
             jLabel6.setVisible(false);
         }
-        SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name and '"+genre+"' = any(\"genre\"));";
+        SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name and '"+genre+"' = any(\"genre\"))";
             
         
         Object[] columns = {"Film ismi","Year","Director","likes"};
@@ -393,7 +395,7 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
 
     private void jTextField2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField2MouseClicked
         // TODO add your handling code here:
-        jTextField1.setText("");
+        jTextField2.setText("");
     }//GEN-LAST:event_jTextField2MouseClicked
 
     private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
@@ -406,9 +408,9 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
         // TODO add your handling code here:
         String SQL;
         if(jButton1.getText().equals("Alfabetik Sırala")){
-            SQL = "select * from watchlist order by moviename asc";
+            SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name) order by name asc";
         }else{
-            SQL = "select * from watchlist order by moviename desc";
+            SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name) order by name asc";
         }
         
         Object[] columns = {"Film ismi","Year","Director","likes"};
@@ -442,6 +444,38 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
 
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // TODO add your handling code here:
+        String movie = jTextField1.getText();
+        if(movie.equals("") || movie.equals("Filmlerde Ara")){
+            jLabel6.setText("Lütfen uygun film ismi giriniz.");
+            return;
+        }
+        String SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name ) and name='"+movie+"'";
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel5MouseClicked
 
     /**
      * @param args the command line arguments
