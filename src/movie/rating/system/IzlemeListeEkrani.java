@@ -42,7 +42,7 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
                 return false;
             } 
         };
-        String SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name";
+        String SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name)";
         
         
         Object[] columns = {"Film ismi","Year","Director","likes"};
@@ -406,9 +406,9 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
         // TODO add your handling code here:
         String SQL;
         if(jButton1.getText().equals("Alfabetik Sırala")){
-            SQL = "select * from watchlist order by moviename asc";
+            SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name) order by name asc";
         }else{
-            SQL = "select * from watchlist order by moviename desc";
+            SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name) order by name desc";
         }
         
         Object[] columns = {"Film ismi","Year","Director","likes"};

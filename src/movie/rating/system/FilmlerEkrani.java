@@ -7,6 +7,8 @@ package movie.rating.system;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -20,7 +22,8 @@ public class FilmlerEkrani extends javax.swing.JFrame {
     /**
      * Creates new form FilmlerEkrani
      */
-    DefaultTableModel myModel;
+    private DefaultTableModel myModel;
+    private static Movie movie;
     public FilmlerEkrani() {
         initComponents();
         jLabel7.setVisible(false);
@@ -188,7 +191,7 @@ public class FilmlerEkrani extends javax.swing.JFrame {
         jLabel3.setText("Toplam Film Sayısı: 000");
 
         jTextField1.setForeground(new java.awt.Color(51, 102, 255));
-        jTextField1.setText("Tür:");
+        jTextField1.setText("Tür: (örn. Macera)");
         jTextField1.setBorder(null);
         jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -250,6 +253,7 @@ public class FilmlerEkrani extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setForeground(new java.awt.Color(51, 102, 255));
         jLabel7.setText("jLabel7");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -332,12 +336,12 @@ public class FilmlerEkrani extends javax.swing.JFrame {
         // TODO add your handling code here:
         String SQL;
         String genre = jTextField1.getText();
-        if(genre.equals("") || genre.equals("Tür:")){
+        if(genre.equals("") || genre.equals("Tür: (örn. Macera)")){
             jLabel7.setText("Lütfen uygun film türü girin.");
             jLabel7.setVisible(true);
-        }else{
-            jLabel7.setVisible(false);
+            return;
         }
+        jLabel7.setVisible(false);
         SQL = "select* from movie where '"+genre+"' = any (\"genre\")";
         
         
@@ -387,7 +391,7 @@ public class FilmlerEkrani extends javax.swing.JFrame {
     private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
         // TODO add your handling code here:
         if(jTextField1.getText().equals(""))
-        jTextField1.setText("Tür:");
+        jTextField1.setText("Tür: (örn. Macera)");
     }//GEN-LAST:event_jTextField1FocusLost
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
@@ -401,8 +405,10 @@ public class FilmlerEkrani extends javax.swing.JFrame {
         String movie = jTextField2.getText();
         if(movie.equals("") || movie.equals("Filmlerde Ara")){
             jLabel7.setText("Lütfen uygun film ismi giriniz.");
+            jLabel7.setVisible(true);
             return;
         }
+        jLabel7.setVisible(false);
         String SQL = "select * from movie where name='"+movie+"'";
         
         Object[] columns = {"Film ismi","Year","Director","likes"};
@@ -468,12 +474,27 @@ public class FilmlerEkrani extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int row = jTable1.rowAtPoint(evt.getPoint());
-        int col = jTable1.columnAtPoint(evt.getPoint());
+        int year=0,likes=0;
+        String director="",summary="",genreTemp = null;
+        String[] genre=null;
         
-        
-        
-        System.out.println(row+" "+col);
-        
+        String moviename = (String)jTable1.getModel().getValueAt(row, 0);
+        String SQL = "select * from movie where name='"+moviename+"'";
+        ResultSet rs = Veritabani.list(SQL);
+        try {
+            while(rs.next()){
+                moviename = rs.getString("name");
+                year = rs.getInt("year");
+                director = rs.getString("director");
+                likes = rs.getInt("likes");
+                genreTemp = rs.getString("genre");
+                summary = rs.getString("Summary");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        genreTemp=genreTemp.substring(1, genreTemp.length()-1);
+        genre = genreTemp.split(",");
         
     }//GEN-LAST:event_jTable1MouseClicked
 
