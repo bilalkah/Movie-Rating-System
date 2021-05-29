@@ -109,6 +109,22 @@ public class Veritabani {
         return count;
     }
     
+    static int getFilmCount(String SQL){
+        int count=0;
+        Statement statement;
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL);
+            if(resultSet.next()){
+                count = resultSet.getInt("count");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Veritabani.class.getName()).log(Level.SEVERE, null, ex);
+            count = 0;
+        }
+        return count;
+    }
+    
     static void updateUserInfo(String Column, String username, String newName){
         String SQL = "update kullanici set "+Column+"=? where username='"+username+"'";
         try {
