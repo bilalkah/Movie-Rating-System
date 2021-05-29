@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/Miracetdin/OneDrive/Masaüstü/Movie-Rating-System/src/movie/rating/system/FilmlerEkrani.java</file>
             <file>file:/C:/Users/Miracetdin/OneDrive/Masaüstü/Movie-Rating-System/src/movie/rating/system/AramaEkrani.java</file>
@@ -12,5 +13,8 @@
             <file>file:/C:/Users/Miracetdin/OneDrive/Masaüstü/Movie-Rating-System/src/movie/rating/system/GununTavsiyesiEkrani.java</file>
             <file>file:/C:/Users/Miracetdin/OneDrive/Masaüstü/Movie-Rating-System/nbproject/private/private.xml</file>
         </group>
+=======
+        <group/>
+>>>>>>> d0f0a2f9fd8fb326082ed8ae73e7cfcf65ef8428
     </open-files>
 </project-private>
