@@ -5,7 +5,6 @@
  */
 package movie.rating.system;
 
-import java.util.ArrayList;
 
 /**
  *
@@ -20,25 +19,18 @@ public class Movie {
     private String summary;
     private static Movie movie = null;
 
-    protected Movie(String movieName, int year, String director, int likes, String[] genre, String summary) {
-        this.movieName = movieName;
-        this.year = year;
-        this.director = director;
-        this.likes = likes;
-        this.genre = genre;
-        this.summary = summary;
+    protected Movie() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" + "movieName=" + movieName + ", year=" + year + ", director=" + director + ", likes=" + likes + ", genre=" + genre + ", summary=" + summary + '}';
     }
     
-    public Movie createMovie(String movieName, int year, String director, int likes, String[] genre, String summary){
+    public static Movie createMovie(){
         if(movie == null){
-            movie = new Movie(movieName,year,director,likes,genre,summary);
-        }else{
-            setMovieName(movieName);
-            setYear(year);
-            setDirector(director);
-            setLikes(likes);
-            setGenre(genre);
-            setSummary(summary);
+            movie = new Movie();
         }
         return movie;
     }

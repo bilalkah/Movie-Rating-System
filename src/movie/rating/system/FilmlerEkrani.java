@@ -23,7 +23,7 @@ public class FilmlerEkrani extends javax.swing.JFrame {
      * Creates new form FilmlerEkrani
      */
     private DefaultTableModel myModel;
-    private static Movie movie;
+    
     public FilmlerEkrani() {
         initComponents();
         jLabel7.setVisible(false);
@@ -31,7 +31,7 @@ public class FilmlerEkrani extends javax.swing.JFrame {
         filmCount();
         
     }
-    public void filmCount(){
+    private void filmCount(){
         String SQL = "select count(*) from movie";
         jLabel3.setText("Toplam Film Sayısı: "+String.valueOf(Veritabani.getFilmCount(SQL)));
     }
@@ -39,7 +39,7 @@ public class FilmlerEkrani extends javax.swing.JFrame {
         jTextField2.setText("");
         jTextField2.requestFocus();
     }
-    public void init(){
+    private void init(){
         myModel = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int i, int i1) {
@@ -490,11 +490,21 @@ public class FilmlerEkrani extends javax.swing.JFrame {
                 genreTemp = rs.getString("genre");
                 summary = rs.getString("Summary");
             }
+            genreTemp=genreTemp.substring(1, genreTemp.length()-1);
+            genre = genreTemp.split(",");
+        
+            Movie m = Movie.createMovie();
+            m.setMovieName(moviename);
+            m.setYear(year);
+            m.setDirector(director);
+            m.setGenre(genre);
+            m.setLikes(likes);
+            m.setSummary(summary);
+        
+        System.out.println(m.toString());
         } catch (SQLException ex) {
             Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
         }
-        genreTemp=genreTemp.substring(1, genreTemp.length()-1);
-        genre = genreTemp.split(",");
         
     }//GEN-LAST:event_jTable1MouseClicked
 
