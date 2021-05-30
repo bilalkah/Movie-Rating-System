@@ -20,7 +20,7 @@ public class ProfilEkrani extends javax.swing.JFrame {
         jTextField5.setText(MovieRatingSystem.kullanici.getSurname());
         jTextField6.setText("Yeni Şifre");
         jTextField1.setText("Yeni Şifre");
-        jLabel8.setText("İzleme listesi film sayısı : "+Veritabani.getCount("liked",MovieRatingSystem.kullanici.getUsername()));
+        jLabel8.setText("Beğeni listesi film sayısı : "+Veritabani.getCount("liked",MovieRatingSystem.kullanici.getUsername()));
         jLabel9.setText("İzleme listesi film sayısı : "+Veritabani.getCount("watchlist",MovieRatingSystem.kullanici.getUsername()));
         jLabel14.setVisible(false);
     }

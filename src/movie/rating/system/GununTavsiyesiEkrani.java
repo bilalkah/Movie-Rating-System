@@ -28,7 +28,7 @@ public class GununTavsiyesiEkrani extends javax.swing.JFrame {
     }
     
     public void buttonInit(){
-        String SQL = "select * from liked where moviename='"+movie.getMovieName()+"'";
+        String SQL = "select * from liked where moviename='"+movie.getMovieName()+"' and username='"+MovieRatingSystem.kullanici.getUsername()+"'";
         ResultSet rs = Veritabani.list(SQL);
         try {
             if(rs.next()){
@@ -40,7 +40,7 @@ public class GununTavsiyesiEkrani extends javax.swing.JFrame {
             Logger.getLogger(GununTavsiyesiEkrani.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        SQL = "select * from watchlist where moviename='"+movie.getMovieName()+"'";
+        SQL = "select * from watchlist where moviename='"+movie.getMovieName()+"' and username='"+MovieRatingSystem.kullanici.getUsername()+"'";
         rs = Veritabani.list(SQL);
         try {
             if(rs.next()){
@@ -276,7 +276,7 @@ public class GununTavsiyesiEkrani extends javax.swing.JFrame {
             }
         }else{
 
-            String SQL = "delete from watchlist where moviename='"+movie.getMovieName()+"'";
+            String SQL = "delete from watchlist where moviename='"+movie.getMovieName()+"' and username='"+MovieRatingSystem.kullanici.getUsername()+"'";
             try {
                 PreparedStatement preparedStatement = preparedStatement = Veritabani.connection.prepareStatement(SQL);
                 preparedStatement.executeUpdate();
@@ -285,6 +285,7 @@ public class GununTavsiyesiEkrani extends javax.swing.JFrame {
                 Logger.getLogger(Veritabani.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        labelInit();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -322,6 +323,7 @@ public class GununTavsiyesiEkrani extends javax.swing.JFrame {
                 Logger.getLogger(Veritabani.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        labelInit();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
