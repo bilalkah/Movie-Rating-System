@@ -9,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,7 +27,7 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
         init();
         filmCount();
     }
-    public void filmCount(){
+    private void filmCount(){
         String SQL = "select count(*) from watchlist where username='"+ MovieRatingSystem.kullanici.getUsername()+"'";
         jLabel4.setText("Toplam Film Sayısı: "+String.valueOf(Veritabani.getFilmCount(SQL)));
     }
@@ -37,7 +35,7 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
         jTextField1.setText("");
         jTextField1.requestFocus();
     }
-    public void init(){
+    private void init(){
         myModel = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int i, int i1) {
@@ -96,6 +94,7 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,7 +143,7 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -184,6 +183,11 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel4.setForeground(new java.awt.Color(51, 102, 255));
@@ -257,6 +261,14 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
 
         jLabel6.setText("jLabel6");
 
+        jButton3.setForeground(new java.awt.Color(51, 102, 255));
+        jButton3.setText("Beğeniye Göre Sırala");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -280,13 +292,15 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
                                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addGap(30, 30, 30))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -297,7 +311,7 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
@@ -315,9 +329,11 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)
+                        .addGap(14, 14, 14)))
                 .addContainerGap())
         );
 
@@ -487,6 +503,81 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel5MouseClicked
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int row = jTable1.rowAtPoint(evt.getPoint());
+        int year=0,likes=0;
+        String director="",summary="",genreTemp = null;
+        String[] genre=null;
+        
+        String moviename = (String)jTable1.getModel().getValueAt(row, 0);
+        String SQL = "select * from movie where exists (select moviename from watchlist where watchlist.moviename=movie.name) and name='"+moviename+"'";
+        ResultSet rs = Veritabani.list(SQL);
+        try {
+            while(rs.next()){
+                moviename = rs.getString("name");
+                year = rs.getInt("year");
+                director = rs.getString("director");
+                likes = rs.getInt("likes");
+                genreTemp = rs.getString("genre");
+                summary = rs.getString("Summary");
+            }
+            genreTemp=genreTemp.substring(1, genreTemp.length()-1);
+            genre = genreTemp.split(",");
+        
+            GununTavsiyesiEkrani.movie = Movie.createMovie();
+            GununTavsiyesiEkrani.movie.setMovieName(moviename);
+            GununTavsiyesiEkrani.movie.setYear(year);
+            GununTavsiyesiEkrani.movie.setDirector(director);
+            GununTavsiyesiEkrani.movie.setGenre(genre);
+            GununTavsiyesiEkrani.movie.setLikes(likes);
+            GununTavsiyesiEkrani.movie.setSummary(summary);
+            
+            GununTavsiyesiEkrani gununTavsiyesiEkrani = new GununTavsiyesiEkrani();
+            gununTavsiyesiEkrani.setLocation(550, 250);
+            this.dispose();
+            gununTavsiyesiEkrani.setVisible(true);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String SQL;
+        if(jButton3.getText().equals("Beğeniye Göre Sırala")){
+            SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name ) order by likes desc";
+            jButton3.setText("Beğeni Tersine Sırala");
+        }else{
+            SQL = "select * from movie where exists (select moviename from watchlist where username='"+MovieRatingSystem.kullanici.getUsername()+"' and watchlist.moviename=movie.name ) order by likes asc";
+            jButton3.setText("Beğeniye göre Sırala");
+        }
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -525,6 +616,7 @@ public class IzlemeListeEkrani extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;

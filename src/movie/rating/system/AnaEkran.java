@@ -8,6 +8,7 @@ package movie.rating.system;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -487,19 +488,69 @@ public class AnaEkran extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel7MouseClicked
 
     private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
-        // TODO add your handling code here:
-         BegendiklerimEkrani begendiklerimEkrani = new BegendiklerimEkrani();
-         begendiklerimEkrani.setLocation(550, 250);
-         this.dispose();
-         begendiklerimEkrani.setVisible(true);
+        
+        BegendiklerimEkrani begendiklerimEkrani = new BegendiklerimEkrani();
+        begendiklerimEkrani.setLocation(550, 250);
+        this.dispose();
+        begendiklerimEkrani.setVisible(true);
+            
+        
     }//GEN-LAST:event_jPanel8MouseClicked
 
     private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
         // TODO add your handling code here:
-        GununTavsiyesiEkrani gununTavsiyesiEkrani = new GununTavsiyesiEkrani();
-        gununTavsiyesiEkrani.setLocation(550, 250);
-        this.dispose();
-        gununTavsiyesiEkrani.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            String SQL = "select count(*) from movie";
+            ResultSet rs = Veritabani.list(SQL);
+            int year=0,likes=0;
+            String moviename,director,summary,genreTemp;
+            moviename = "";
+            director="";
+            summary = "";
+            genreTemp = "";
+            String[] genre=null;
+            int count=0;
+            while(rs.next()){
+                count = rs.getInt("count");
+            }
+            Random rand = new Random();
+            int randint = rand.nextInt(count);
+            SQL = "select * from movie";
+            rs = Veritabani.list(SQL);
+            while(rs.next()){
+                if(randint!=0){
+                    randint--;
+                }else{
+                    moviename = rs.getString("name");
+                    year = rs.getInt("year");
+                    director = rs.getString("director");
+                    likes = rs.getInt("likes");
+                    genreTemp = rs.getString("genre");
+                    summary = rs.getString("Summary");
+                    break;
+                }
+            }
+            genreTemp=genreTemp.substring(1, genreTemp.length()-1);
+            genre = genreTemp.split(",");
+        
+            GununTavsiyesiEkrani.movie = Movie.createMovie();
+            GununTavsiyesiEkrani.movie.setMovieName(moviename);
+            GununTavsiyesiEkrani.movie.setYear(year);
+            GununTavsiyesiEkrani.movie.setDirector(director);
+            GununTavsiyesiEkrani.movie.setGenre(genre);
+            GununTavsiyesiEkrani.movie.setLikes(likes);
+            GununTavsiyesiEkrani.movie.setSummary(summary);
+            
+            
+            GununTavsiyesiEkrani gununTavsiyesiEkrani = new GununTavsiyesiEkrani();
+            gununTavsiyesiEkrani.setLocation(550, 250);
+            this.dispose();
+            gununTavsiyesiEkrani.setVisible(true);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AnaEkran.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jPanel9MouseClicked
     
     /**

@@ -5,6 +5,12 @@
  */
 package movie.rating.system;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author bilal
@@ -14,10 +20,53 @@ public class BegendiklerimEkrani extends javax.swing.JFrame {
     /**
      * Creates new form BegendiklerimEkrani
      */
+    DefaultTableModel myModel;
     public BegendiklerimEkrani() {
         initComponents();
+        jLabel3.setVisible(false);
+        init();
+        filmCount();
     }
-
+    private void filmCount(){
+        String SQL = "select count(*) from liked where username='"+ MovieRatingSystem.kullanici.getUsername()+"'";
+        jLabel4.setText("Toplam Film Sayısı: "+String.valueOf(Veritabani.getFilmCount(SQL)));
+    }
+    public void arama(){
+        jTextField1.setText("");
+        jTextField1.requestFocus();
+    }
+    private void init(){
+        myModel = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int i, int i1) {
+                return false;
+            } 
+        };
+        String SQL = "select * from movie where exists (select moviename from liked where username='"+MovieRatingSystem.kullanici.getUsername()+"' and liked.moviename=movie.name)";
+        
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,9 +93,9 @@ public class BegendiklerimEkrani extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(700, 500));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setPreferredSize(new java.awt.Dimension(700, 500));
@@ -82,7 +131,7 @@ public class BegendiklerimEkrani extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addContainerGap(204, Short.MAX_VALUE))
+                .addContainerGap(207, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,6 +181,11 @@ public class BegendiklerimEkrani extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel4.setForeground(new java.awt.Color(51, 102, 255));
@@ -173,6 +227,11 @@ public class BegendiklerimEkrani extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(51, 102, 255));
         jButton1.setText("Alfabetik Sırala");
         jButton1.setPreferredSize(new java.awt.Dimension(160, 40));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setForeground(new java.awt.Color(51, 102, 255));
         jButton2.setText("Türe Göre Ara");
@@ -184,8 +243,21 @@ public class BegendiklerimEkrani extends javax.swing.JFrame {
         });
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_search_24px_2.png"))); // NOI18N
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
 
         jLabel3.setText("jLabel3");
+
+        jButton3.setForeground(new java.awt.Color(51, 102, 255));
+        jButton3.setText("Beğeniye Göre Sırala");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -203,13 +275,15 @@ public class BegendiklerimEkrani extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTextField1)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator1)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -218,7 +292,7 @@ public class BegendiklerimEkrani extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,6 +314,8 @@ public class BegendiklerimEkrani extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -277,6 +353,38 @@ public class BegendiklerimEkrani extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        String SQL;
+        String genre = jTextField2.getText();
+        if(genre.equals("") || genre.equals("Tür:")){
+            jLabel3.setText("Lütfen uygun film türü girin.");
+            jLabel3.setVisible(true);
+        }else{
+            jLabel3.setVisible(false);
+        }
+        SQL = "select * from movie where exists (select moviename from liked where username='"+MovieRatingSystem.kullanici.getUsername()+"' and liked.moviename=movie.name and '"+genre+"' = any(\"genre\"))";
+            
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(IzlemeListeEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
@@ -295,6 +403,148 @@ public class BegendiklerimEkrani extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTextField2.setText("");
     }//GEN-LAST:event_jTextField2MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+        String movie = jTextField1.getText();
+        if(movie.equals("") || movie.equals("Filmlerde Ara")){
+            jLabel3.setText("Lütfen uygun film ismi giriniz.");
+            return;
+        }
+        String SQL = "select * from movie where exists (select moviename from liked where username='"+MovieRatingSystem.kullanici.getUsername()+"' and liked.moviename=movie.name ) and name='"+movie+"'";
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String SQL;
+        if(jButton1.getText().equals("Alfabetik Sırala")){
+            SQL = "select * from movie where exists (select moviename from liked where username='"+MovieRatingSystem.kullanici.getUsername()+"' and liked.moviename=movie.name) order by name asc";
+        }else{
+            SQL = "select * from movie where exists (select moviename from liked where username='"+MovieRatingSystem.kullanici.getUsername()+"' and liked.moviename=movie.name) order by name desc";
+        }
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+            if(jButton1.getText().equals("Alfabetik Sırala")){
+                jButton1.setText("Ters Alfabetik Sırala");
+            }else{
+                jButton1.setText("Alfabetik Sırala");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(IzlemeListeEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int row = jTable1.rowAtPoint(evt.getPoint());
+        int year=0,likes=0;
+        String director="",summary="",genreTemp = null;
+        String[] genre=null;
+        
+        String moviename = (String)jTable1.getModel().getValueAt(row, 0);
+        String SQL = "select * from movie where exists (select moviename from liked where liked.moviename=movie.name) and name='"+moviename+"'";
+        ResultSet rs = Veritabani.list(SQL);
+        try {
+            while(rs.next()){
+                moviename = rs.getString("name");
+                year = rs.getInt("year");
+                director = rs.getString("director");
+                likes = rs.getInt("likes");
+                genreTemp = rs.getString("genre");
+                summary = rs.getString("Summary");
+            }
+            genreTemp=genreTemp.substring(1, genreTemp.length()-1);
+            genre = genreTemp.split(",");
+        
+            GununTavsiyesiEkrani.movie = Movie.createMovie();
+            GununTavsiyesiEkrani.movie.setMovieName(moviename);
+            GununTavsiyesiEkrani.movie.setYear(year);
+            GununTavsiyesiEkrani.movie.setDirector(director);
+            GununTavsiyesiEkrani.movie.setGenre(genre);
+            GununTavsiyesiEkrani.movie.setLikes(likes);
+            GununTavsiyesiEkrani.movie.setSummary(summary);
+            
+            GununTavsiyesiEkrani gununTavsiyesiEkrani = new GununTavsiyesiEkrani();
+            gununTavsiyesiEkrani.setLocation(550, 250);
+            this.dispose();
+            gununTavsiyesiEkrani.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String SQL;
+        if(jButton3.getText().equals("Beğeniye Göre Sırala")){
+            SQL = "select * from movie where exists (select moviename from liked where username='"+MovieRatingSystem.kullanici.getUsername()+"' and liked.moviename=movie.name ) order by likes desc";
+            jButton3.setText("Beğeni Tersine Sırala");
+        }else{
+            SQL = "select * from movie where exists (select moviename from liked where username='"+MovieRatingSystem.kullanici.getUsername()+"' and liked.moviename=movie.name ) order by likes asc";
+            jButton3.setText("Beğeniye Göre Sırala");
+        }
+        
+        Object[] columns = {"Film ismi","Year","Director","likes"};
+        Object[] rows = new Object[4];
+        
+        myModel.setColumnCount(0);
+        myModel.setRowCount(0);
+        myModel.setColumnIdentifiers(columns);
+        
+        ResultSet rs = Veritabani.list(SQL);
+        
+        try {
+            while(rs.next()){
+                rows[0]=rs.getString("name");
+                rows[1]=rs.getInt("year");
+                rows[2]=rs.getString("director");
+                rows[3]=rs.getInt("likes");
+                myModel.addRow(rows);
+            }
+            jTable1.setModel(myModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(FilmlerEkrani.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -334,6 +584,7 @@ public class BegendiklerimEkrani extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
