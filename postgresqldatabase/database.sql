@@ -14,7 +14,7 @@ create table if not exists Kullanici (
 create table if not exists movie (
 	name varchar (50) Primary key not null,
 	year int not null,
-	director varchar(30) not null,
+	director varchar(40) not null,
 	likes int,
 	genre text[][] not null,
 	summary varchar(400)
